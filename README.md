@@ -1,7 +1,7 @@
 # lavamart
 
 -----------------still in development--------------
-A new Flutter project.
+A new Flutter e-commerce app.
 
 ## Getting Started
 
