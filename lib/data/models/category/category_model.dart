@@ -17,13 +17,13 @@ class CategoryModel extends Category {
     required String CategoryId,
     required String CategoryName,
     required String Description,
-    required String Categoryimage,
+    String? Categoryimage,
 
   }) : super(
     CategoryId: CategoryId,
     CategoryName: CategoryName,
     Description: Description,
-    Categoryimage: Categoryimage,
+    Categoryimage: Categoryimage ?? '',
   );
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(

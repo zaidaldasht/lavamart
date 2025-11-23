@@ -13,7 +13,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<List<CategoryModel>> getCategories() =>
-      _getCategoryFromUrl('$baseUrl/categories');
+      _getCategoryFromUrl('$baseUrl/lavamart/Categories/getCategories');
 
   Future<List<CategoryModel>> _getCategoryFromUrl(String url) async {
     final response = await client.get(

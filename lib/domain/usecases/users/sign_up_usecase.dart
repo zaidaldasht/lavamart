@@ -18,9 +18,13 @@ class SignUpParams {
   final String FullName;
   final String email;
   final String password;
+  final String PhoneNumber;
+
   const SignUpParams({
     required this.FullName,
     required this.email,
     required this.password,
+    required this.PhoneNumber,
+
   });
 }

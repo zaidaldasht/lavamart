@@ -16,22 +16,32 @@ abstract class ProductRemoteDataSource {
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final http.Client client;
   ProductRemoteDataSourceImpl({required this.client});
-
   @override
-  Future<ProductResponseModel> getProducts(params) => _getProductFromUrl(
-      '$baseUrl/products?keyword=${params.keyword}&pageSize=${params.pageSize}&page=${params.limit}&categories=${jsonEncode(params.categories.map((e) => e.CategoryId).toList())}');
+  Future<ProductResponseModel> getProducts(params) async {
+    final keywordParam = Uri.encodeComponent(params.keyword ?? '');
+    final pageParam = (params.limit != null && params.limit! > 0) ? params.limit! : 1;
+    final pageSizeParam = params.pageSize ?? 10;
 
-  Future<ProductResponseModel> _getProductFromUrl(String url) async {
-    final response = await client.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
+    String categoriesQuery = '';
+    if (params.categories != null && params.categories.isNotEmpty) {
+      categoriesQuery = params.categories
+          .map((e) => 'Categories=${e.CategoryId}')
+          .join('&');
+    }
+
+    final url =
+        '$baseUrl/lavamart/Products/getProducts?keyword=$keywordParam&pageSize=$pageSizeParam&page=$pageParam${categoriesQuery.isNotEmpty ? '&$categoriesQuery' : ''}';
+
+    print('Request URL: $url');
+
+    final response = await client.get(Uri.parse(url));
+
     if (response.statusCode == 200) {
       return productResponseModelFromJson(response.body);
     } else {
+      print('Request failed: ${response.statusCode} ${response.body}');
       throw ServerException();
     }
   }
+
 }

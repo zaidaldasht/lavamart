@@ -52,6 +52,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         )),
       );
     } catch (e) {
+      print('Error in ProductBloc: $e');
       emit(ProductError(
         products: state.products,
         metaData: state.metaData,

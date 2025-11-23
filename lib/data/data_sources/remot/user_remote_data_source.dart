@@ -20,15 +20,38 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   UserRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<AuthenticationResponseModel> signIn(SignInParams params) async {
+  Future<AuthenticationResponseModel> signUp(SignUpParams params) async {
     final response =
-    await client.post(Uri.parse('$baseUrl/authentication/local/sign-in'),
+    await client.post(Uri.parse('$baseUrl/lavamart/Account/signUp'),
         headers: {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          'identifier': params.username,
-          'password': params.password,
+          'UserName': params.FullName,
+          'Email': params.email,
+          'Password': params.password,
+          'PhoneNumber':params.PhoneNumber,
+        }));
+    if (response.statusCode == 201) {
+      return authenticationResponseModelFromJson(response.body);
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
+      throw CredentialFailure();
+    } else {
+      throw ServerException();
+    }
+  }
+
+
+  @override
+  Future<AuthenticationResponseModel> signIn(SignInParams params) async {
+    final response =
+    await client.post(Uri.parse('$baseUrl/lavamart/Account/signIn'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'UserName': params.username,
+          'Password': params.password,
         }));
     if (response.statusCode == 200) {
       return authenticationResponseModelFromJson(response.body);
@@ -39,24 +62,5 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     }
   }
 
-  @override
-  Future<AuthenticationResponseModel> signUp(SignUpParams params) async {
-    final response =
-    await client.post(Uri.parse('$baseUrl/authentication/local/sign-up'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode({
-          'FullName': params.FullName,
-          'email': params.email,
-          'password': params.password,
-        }));
-    if (response.statusCode == 201) {
-      return authenticationResponseModelFromJson(response.body);
-    } else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw CredentialFailure();
-    } else {
-      throw ServerException();
-    }
-  }
+
 }

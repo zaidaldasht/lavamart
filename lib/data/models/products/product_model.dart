@@ -30,7 +30,7 @@ class ProductModel extends ProductEntity {
     StockQuantity: json["StockQuantity"],
     Categories: List<CategoryModel>.from(
         json["Categories"].map((x) => CategoryModel.fromJson(x))),
-    Image: List<String>.from(json["Image"].map((x) => x)),
+    Image: List<String>.from(json["Image"]),
     Createdate: DateTime.parse(json["Createdate"]),
   );
 

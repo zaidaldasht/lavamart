@@ -27,6 +27,7 @@ class _NoConnectionColumnState extends State<NoConnectionColumn> {
     });
 
     Future.delayed(const Duration(seconds: 5), () {
+      if (!mounted) return;
       setState(() {
         isLoading = false;
       });

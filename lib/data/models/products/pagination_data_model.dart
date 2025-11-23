@@ -15,12 +15,12 @@ class PaginationMetaDataModel extends PaginationMetaData {
   factory PaginationMetaDataModel.fromJson(Map<String, dynamic> json) => PaginationMetaDataModel(
     page: json["page"],
     pageSize: json["pageSize"],
-    total: json["total"],
+    total: json["totalCount"],
   );
 
   Map<String, dynamic> toJson() => {
     "page": limit,
     "pageSize": pageSize,
-    "total": total,
+    "totalCount": total,
   };
 }

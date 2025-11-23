@@ -25,6 +25,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _PhoneNumberController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
@@ -37,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _PhoneNumberController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -94,6 +96,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 buildTextFormField(_confirmPasswordController, "Password",
                     isObscure: true),
                 Space.yf(1.5),
+                Text(
+                  "Phone Number*",
+                  style: AppText.b1b,
+                ),
+                Space.y!,
+                buildTextFormField(_PhoneNumberController, "Phone Number"),
+                Space.y!,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -150,6 +159,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   FullName: _nameController.text,
                                   email: _emailController.text,
                                   password: _passwordController.text,
+                                  PhoneNumber: _passwordController.text,
+
                                 ),
                               ),
                             );
